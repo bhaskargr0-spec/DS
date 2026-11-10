@@ -55,7 +55,7 @@ static inline int push(MixedStack *st, DataType type, Data value)
 {
    Node *n = (Node *)malloc(sizeof(Node));
    if (n == NULL) {
-      fprintf(stderr, "Error: out of memory (node)\\n");
+      fprintf(stderr, "Error: out of memory (node)\n");
       return 0;
    }
 
@@ -65,7 +65,7 @@ static inline int push(MixedStack *st, DataType type, Data value)
        size_t len = strlen(value.s) + 1;
        n->value.s = (char *)malloc(len);
        if (n->value.s == NULL) {
-          fprintf(stderr, "Error: out of memory (string)\\n");
+          fprintf(stderr, "Error: out of memory (string)\n");
           free(n);
           return 0;
        }
@@ -107,12 +107,12 @@ static inline int pushString(MixedStack *st, const char *x)
 static inline int peek(const MixedStack *st)
 {
    if (isEmpty(st)) {
-      fprintf(stderr, "Stack underflow: nothing to peek\\n");
+      fprintf(stderr, "Stack underflow: nothing to peek\n");
       return 0;
     }
     printf("Top -> ");
     printNode(st->top);
-    printf("\\n");
+    printf("\n");
     return 1;
 }
 
@@ -121,14 +121,14 @@ static inline int pop(MixedStack *st)
    Node *n;
 
     if (isEmpty(st)) {
-       fprintf(stderr, "Stack underflow: nothing to pop\\n");
+       fprintf(stderr, "Stack underflow: nothing to pop\n");
        return 0;
     }
 
     n = st->top;
     printf("Popped -> ");
     printNode(n);
-    printf("\\n");
+    printf("\n");
 
     st->top = n->next;
     if (n->type == TYPE_STRING)
