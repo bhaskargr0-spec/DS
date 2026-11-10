@@ -1,5 +1,5 @@
-#include <stdio.h>
-#include "mixedstack.h"
+#define USE_STACK
+#include "../root.h"
 
 int main(void)
 {

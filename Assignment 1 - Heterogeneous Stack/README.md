@@ -10,8 +10,18 @@ Write a complete header file, `mixedstack.h`, that allows push, pop, peek, and i
 
 ## Project Files
 
+- `../root.h` - Central assignment header selector.
 - `mixedstack.h` - Contains the stack data types and stack operation functions.
-- `main.c` - Demonstrates the stack operations.
+- `main.c` - Demonstrates the stack operations and includes only `../root.h` as its header.
+
+## Header Selection
+
+The first two lines of `main.c` select the stack implementation:
+
+```c
+#define USE_STACK
+#include "../root.h"
+```
 
 ## Data Types Supported
 
@@ -28,11 +38,14 @@ Write a complete header file, `mixedstack.h`, that allows push, pop, peek, and i
 - Dynamic memory allocation using `malloc()`
 - Memory deallocation using `free()`
 - Header guards and a separate header file
+- Conditional compilation through the central `root.h`
 
 ## Compile
 
+Run from this assignment directory:
+
 ```bash
-gcc -Wall -Wextra -std=c11 main.c -o mixedstack
+gcc -Wall -Wextra -std=c11 -pedantic main.c -o mixedstack
 ```
 
 ## Run
