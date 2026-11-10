@@ -71,9 +71,9 @@ static int readInteger(const char *prompt, int *value)
 
     errno = 0;
     parsed = strtol(input, &end, 10);
-    end = skipWhitespace(end);
 
-    if (input == end || errno == ERANGE || *end != '\0' ||
+    if (input == end || errno == ERANGE ||
+        !hasOnlyTrailingWhitespace(end) ||
         parsed < INT_MIN || parsed > INT_MAX) {
         return 0;
     }
