@@ -19,7 +19,7 @@ struct PriorityQueue
 };
 
 /* Initialize all three queues. */
-void initialize(struct PriorityQueue *q)
+void initQueue(struct PriorityQueue *q)
 {
     q->front_low = 0;
     q->rear_low = -1;

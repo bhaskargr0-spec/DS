@@ -8,7 +8,7 @@ int main(void)
     int status;
     char item[ITEM_SIZE];
 
-    initialize(&queue);
+    initQueue(&queue);
 
     do
     {
