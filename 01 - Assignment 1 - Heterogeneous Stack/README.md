@@ -2,26 +2,12 @@
 
 ## Aim
 
-To implement a heterogeneous stack in C supporting `push`, `pop`, `peek`, and `isEmpty` using structures, unions, pointers, and dynamic memory.
-
-## Problem Statement
-
-Write a complete header file, `mixedstack.h`, that allows push, pop, peek, and isEmpty operations for a heterogeneous stack.
+To implement a heterogeneous stack using a linked list, structures, unions, pointers, and dynamic memory allocation.
 
 ## Project Files
 
-- `../root.h` - Central assignment header selector.
-- `mixedstack.h` - Contains the stack data types and stack operation functions.
-- `main.c` - Demonstrates the stack operations and includes only `../root.h` as its header.
-
-## Header Selection
-
-The first two lines of `main.c` select the stack implementation:
-
-```c
-#define USE_STACK
-#include "../root.h"
-```
+- `mixedstack.h` - Contains the structure definitions and all stack/input helper function definitions.
+- `main.c` - Declares the stack variable locally and provides the menu-driven program.
 
 ## Data Types Supported
 
@@ -30,36 +16,35 @@ The first two lines of `main.c` select the stack implementation:
 - Character
 - String
 
+## Coding Standard
+
+- No global variables.
+- The stack is declared locally in `main()` as `struct MixedStack stack`.
+- Stack functions receive a pointer to the structure.
+- Function definitions are kept in `mixedstack.h`.
+- `main.c` handles the menu and calls the functions.
+- No header guards are used, as required for this assignment format.
+
 ## Concepts Used
 
-- Structures and unions
-- Enumerated data types
+- Structures, unions, and enumerated data types
 - Pointers and linked nodes
 - Dynamic memory allocation using `malloc()`
 - Memory deallocation using `free()`
-- Header guards and a separate header file
-- Conditional compilation through the central `root.h`
+- LIFO (Last In, First Out)
 
-## Compile
+## Compile and Run
 
 Run from this assignment directory:
 
 ```bash
-gcc -Wall -Wextra -std=c11 -pedantic main.c -o mixedstack
-```
-
-## Run
-
-```bash
+gcc -Wall -Wextra -Wpedantic -Werror -std=c11 main.c -o mixedstack
 ./mixedstack
 ```
 
-## Operations Demonstrated
+## Operations
 
-- Initialize the stack
-- Check whether the stack is empty
-- Push an integer, float, character, and string
-- Peek at the top element
-- Pop elements in LIFO order
-- Test stack underflow
-- Free allocated stack memory
+1. **Push:** Select a data type and insert a value.
+2. **Pop:** Remove the top element.
+3. **Display:** Show all elements from top to bottom.
+4. **Exit:** Free allocated memory and terminate the program.

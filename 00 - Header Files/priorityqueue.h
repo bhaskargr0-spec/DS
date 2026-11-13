@@ -1,116 +1,134 @@
-#ifndef PRIORITYQUEUE_H
-#define PRIORITYQUEUE_H
-
 #include <stdio.h>
 
 #define MAX 5
+#define ITEM_SIZE 32
 
-/* Three separate linear queues */
-int low[MAX], medium[MAX], high[MAX];
+/* All priority queue data is grouped inside this structure. */
+struct PriorityQueue
+{
+    char low[MAX][ITEM_SIZE];
+    char medium[MAX][ITEM_SIZE];
+    char high[MAX][ITEM_SIZE];
 
-/* Front and rear positions for each queue */
-int front_low = 0, rear_low = -1;
-int front_medium = 0, rear_medium = -1;
-int front_high = 0, rear_high = -1;
+    int front_low;
+    int rear_low;
+    int front_medium;
+    int rear_medium;
+    int front_high;
+    int rear_high;
+};
 
-/* Remove invalid characters from the input line */
+/* Initialize all three queues. */
+void initialize(struct PriorityQueue *q)
+{
+    q->front_low = 0;
+    q->rear_low = -1;
+    q->front_medium = 0;
+    q->rear_medium = -1;
+    q->front_high = 0;
+    q->rear_high = -1;
+}
+
+/* Remove remaining characters from the input line. */
 void clear_input_buffer(void)
 {
     int ch;
+
     while ((ch = getchar()) != '\n' && ch != EOF)
     {
-        /* discard remaining input */
+        /* Discard remaining input. */
     }
 }
 
-/* Insert an item into the selected priority queue */
-void insert(int item, int priority)
+/* Insert an integer or alphabetic item into the selected queue. */
+void insert(struct PriorityQueue *q, const char item[], int priority)
 {
     if (priority == 1)
     {
-        if (rear_low == MAX - 1)
+        if (q->rear_low == MAX - 1)
             printf("Low priority queue is full.\n");
         else
         {
-            low[++rear_low] = item;
-            printf("%d inserted into Low Priority Queue.\n", item);
+            snprintf(q->low[++q->rear_low], ITEM_SIZE, "%s", item);
+            printf("%s inserted into Low Priority Queue.\n", item);
         }
     }
     else if (priority == 2)
     {
-        if (rear_medium == MAX - 1)
+        if (q->rear_medium == MAX - 1)
             printf("Medium priority queue is full.\n");
         else
         {
-            medium[++rear_medium] = item;
-            printf("%d inserted into Medium Priority Queue.\n", item);
+            snprintf(q->medium[++q->rear_medium], ITEM_SIZE, "%s", item);
+            printf("%s inserted into Medium Priority Queue.\n", item);
         }
     }
     else if (priority == 3)
     {
-        if (rear_high == MAX - 1)
+        if (q->rear_high == MAX - 1)
             printf("High priority queue is full.\n");
         else
         {
-            high[++rear_high] = item;
-            printf("%d inserted into High Priority Queue.\n", item);
+            snprintf(q->high[++q->rear_high], ITEM_SIZE, "%s", item);
+            printf("%s inserted into High Priority Queue.\n", item);
         }
     }
     else
         printf("Invalid priority. Enter 1, 2, or 3.\n");
 }
 
-/* Delete from the highest-priority non-empty queue */
-void delete_item(void)
+/* Delete from the highest-priority non-empty queue. */
+void delete_item(struct PriorityQueue *q)
 {
-    if (front_high <= rear_high)
+    if (q->front_high <= q->rear_high)
     {
-        printf("Deleted item: %d (High Priority)\n", high[front_high]);
-        front_high++;
+        printf("Deleted item: %s (High Priority)\n",
+               q->high[q->front_high]);
+        q->front_high++;
     }
-    else if (front_medium <= rear_medium)
+    else if (q->front_medium <= q->rear_medium)
     {
-        printf("Deleted item: %d (Medium Priority)\n", medium[front_medium]);
-        front_medium++;
+        printf("Deleted item: %s (Medium Priority)\n",
+               q->medium[q->front_medium]);
+        q->front_medium++;
     }
-    else if (front_low <= rear_low)
+    else if (q->front_low <= q->rear_low)
     {
-        printf("Deleted item: %d (Low Priority)\n", low[front_low]);
-        front_low++;
+        printf("Deleted item: %s (Low Priority)\n",
+               q->low[q->front_low]);
+        q->front_low++;
     }
     else
         printf("Priority Queue is empty. Deletion not possible.\n");
 }
 
-/* Display all waiting items in service order */
-void display(void)
+/* Display all waiting items in service order. */
+void display(const struct PriorityQueue *q)
 {
     int i;
 
     printf("\n--- Priority Queue Contents ---\n");
 
     printf("High Priority: ");
-    if (front_high > rear_high)
+    if (q->front_high > q->rear_high)
         printf("Empty");
     else
-        for (i = front_high; i <= rear_high; i++)
-            printf("%d ", high[i]);
+        for (i = q->front_high; i <= q->rear_high; i++)
+            printf("%s ", q->high[i]);
 
     printf("\nMedium Priority: ");
-    if (front_medium > rear_medium)
+    if (q->front_medium > q->rear_medium)
         printf("Empty");
     else
-        for (i = front_medium; i <= rear_medium; i++)
-            printf("%d ", medium[i]);
+        for (i = q->front_medium; i <= q->rear_medium; i++)
+            printf("%s ", q->medium[i]);
 
     printf("\nLow Priority: ");
-    if (front_low > rear_low)
+    if (q->front_low > q->rear_low)
         printf("Empty");
     else
-        for (i = front_low; i <= rear_low; i++)
-            printf("%d ", low[i]);
+        for (i = q->front_low; i <= q->rear_low; i++)
+            printf("%s ", q->low[i]);
 
     printf("\n");
 }
-
-#endif

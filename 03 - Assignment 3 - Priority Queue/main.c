@@ -1,14 +1,19 @@
-#define USE_PRIORITY_QUEUE
-#include "../root.h"
+#include <stdio.h>
+#include "priorityqueue.h"
 
 int main(void)
 {
-    int choice, item, priority;
+    struct PriorityQueue queue;
+    int choice, priority;
     int status;
+    char item[ITEM_SIZE];
+
+    initialize(&queue);
 
     do
     {
         choice = 0;
+
         printf("\n===== PRIORITY QUEUE MENU =====\n");
         printf("1. Insert\n");
         printf("2. Delete\n");
@@ -24,6 +29,7 @@ int main(void)
             printf("\nInput ended. Exiting program.\n");
             break;
         }
+
         if (status != 1)
         {
             printf("Invalid input. Please enter a number.\n");
@@ -33,43 +39,47 @@ int main(void)
         switch (choice)
         {
             case 1:
-                printf("Enter item: ");
-                status = scanf("%d", &item);
+                printf("Enter item (integer or alphabet): ");
+                status = scanf("%31s", item);
                 clear_input_buffer();
+
                 if (status == EOF)
                 {
                     printf("\nInput ended. Exiting program.\n");
                     return 0;
                 }
+
                 if (status != 1)
                 {
-                    printf("Invalid item. Please enter an integer.\n");
+                    printf("Invalid item. Please try again.\n");
                     break;
                 }
 
                 printf("Enter priority (1 = Low, 2 = Medium, 3 = High): ");
                 status = scanf("%d", &priority);
                 clear_input_buffer();
+
                 if (status == EOF)
                 {
                     printf("\nInput ended. Exiting program.\n");
                     return 0;
                 }
+
                 if (status != 1)
                 {
                     printf("Invalid priority. Please enter an integer.\n");
                     break;
                 }
 
-                insert(item, priority);
+                insert(&queue, item, priority);
                 break;
 
             case 2:
-                delete_item();
+                delete_item(&queue);
                 break;
 
             case 3:
-                display();
+                display(&queue);
                 break;
 
             case 4:
